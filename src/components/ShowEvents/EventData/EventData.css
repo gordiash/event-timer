@@ -1,0 +1,15 @@
+.row{
+    margin: 0;
+    padding:0;
+}
+.card-title{
+    text-transform: capitalize;
+    margin: 0;
+    padding:0;
+}
+button span{
+    font-size: 1.5em;
+}
+.card{
+    margin-top: 15px;
+}

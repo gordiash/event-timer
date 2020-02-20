@@ -66,7 +66,6 @@ class App extends React.Component {
       isStarted: !this.state.isStarted,
       eventList: newList,
       eventName: ""
-      
     });
 
     

@@ -8,4 +8,4 @@ Build with React.js
 
 
 
-<a href="event-timer.netlify.com">event-timer.netlify.com</a>
+<a href="https://event-timer.netlify.com">event-timer.netlify.com</a>

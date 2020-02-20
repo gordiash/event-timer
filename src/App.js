@@ -85,8 +85,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <h1 className="text-center mt-3">Event timer</h1>
+      <div className="container col-12">
+        <h1 className="text-center mt-3 ">Event timer</h1>
 
         <EventTimer
           eventDate={this.state.eventDate}

@@ -62,14 +62,14 @@ class EventData extends React.Component {
 
     return (
       <div className="card text-white bg-dark">
-        <header className="row card-header d-flex align-items-center">
-          <h3 className="card-title text-center col-11">{this.props.eventName}</h3>
+        <header className="row card-header d-flex align-items-center col-sm-12">
+          <h3 className="card-title text-center col-10">{this.props.eventName}</h3>
           <button
             onClick={() => {
               this.props.deleteEvent(this.props.eventName);
             }}
             type="button"
-            className=" col btn btn-dark"
+            className=" btn btn-dark"
             aria-label="Close"
           >
             <span aria-hidden="true" className=" large">&times;</span>

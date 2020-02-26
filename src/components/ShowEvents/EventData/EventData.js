@@ -1,4 +1,5 @@
 import React from "react";
+import Popup from "../../PopUp/PopUp";
 import "./EventData.css";
 
 class EventData extends React.Component {
@@ -6,9 +7,14 @@ class EventData extends React.Component {
     super(props);
     this.state = {
       timer: this.props.eventDate,
-      timeToEnd: {}
+      timeToEnd: {},
+      togglePopup: false
     };
   }
+
+  togglePopup = () => {
+    this.setState({ togglePopup: !this.state.togglePopup });
+  };
 
   thick = dateString => {
     const now = new Date();
@@ -17,7 +23,7 @@ class EventData extends React.Component {
 
     let timeLeft = {};
 
-    if (difference > 0) {
+    if (difference > 0 || difference < 0) {
       timeLeft = {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
@@ -26,16 +32,29 @@ class EventData extends React.Component {
       };
     }
 
-    this.setState({
-      timeToEnd: {
-        ...this.state.timeToEnd,
-        days: timeLeft.days,
-        hours: timeLeft.hours,
-        minutes: timeLeft.minutes,
-        seconds: timeLeft.seconds
-      }
-    });
+    if (this.state.timeToEnd.hours < 0) {
+      this.setState({
+        timeToEnd: {
+          ...this.state.timeToEnd,
+          days: timeLeft.days,
+          hours: timeLeft.hours,
+          minutes: timeLeft.minutes,
+          seconds: timeLeft.seconds
+        }
+      });
+    } else {
+      this.setState({
+        timeToEnd: {
+          ...this.state.timeToEnd,
+          days: timeLeft.days,
+          hours: timeLeft.hours,
+          minutes: timeLeft.minutes,
+          seconds: timeLeft.seconds
+        }
+      });
+    }
 
+    console.log(this.state.timeToEnd.hours);
     return timeLeft;
   };
 
@@ -60,10 +79,21 @@ class EventData extends React.Component {
       );
     });
 
-    return (
-      <div className="card text-white bg-dark">
+    return this.state.timeToEnd.hours < 0 ? (
+      !this.state.togglePopup ? (
+        <Popup
+          delete = {()=>this.props.deleteEvent(this.props.eventName)}
+          togglePopup={this.togglePopup}
+          text={"Please place event time at least 24h ahead."}
+        />
+      ) : null
+    ) :
+    (
+      <div className="card text-white bg-dark col-7">
         <header className="row card-header d-flex align-items-center col-sm-12">
-          <h3 className="card-title text-center col-10 col-sm-11">{this.props.eventName}</h3>
+          <h3 className="card-title text-center col-10 col-sm-11">
+            {this.props.eventName}
+          </h3>
           <button
             onClick={() => {
               this.props.deleteEvent(this.props.eventName);
@@ -72,11 +102,15 @@ class EventData extends React.Component {
             className=" btn btn-dark col-1 col-sm-1"
             aria-label="Close"
           >
-            <span aria-hidden="true" className=" large">&times;</span>
+            <span aria-hidden="true" className=" large">
+              &times;
+            </span>
           </button>
         </header>
         <section className="card-body align-middle">
-          <p className="card-text text-center font-weight-bold">Time till event: {timing}</p>
+          <p className="card-text text-center font-weight-bold">
+            Time till event: {timing}
+          </p>
         </section>
       </div>
     );
